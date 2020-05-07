@@ -1,15 +1,20 @@
 package com.example.demo.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 //Essa interface possibilita que o objeto seja transformado em bits (0,1) e trafegue pela rede
 
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -22,9 +27,11 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
+	
 	//Usando o framework, usar o construtor vázio
-	public User() {
-		
+	public User() {	
 	}
 
 	public User(Long id, String name, String email, String phone, String password) {
@@ -35,6 +42,10 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public List<Order> getOrders(){
+		return orders;
+	}
+	
 	public Long getId() {
 		return id;
 	}
