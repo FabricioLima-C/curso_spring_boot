@@ -34,4 +34,17 @@ public class UserService {
 		userRepository.deleteById(id);
 	}
 	
+	public User update(Long id, User obj) {
+		// o método getOne() prepara o objeto monitorado, para mexer e depois efetuar uma operação com o banco de dados
+		User entity = userRepository.getOne(id);
+		updateData(entity, obj);
+		return userRepository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+	} 
+	
 }
