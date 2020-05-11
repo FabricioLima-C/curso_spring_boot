@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //Definindo como entidade e definindo um nome pra tabela
 @Entity
@@ -24,7 +26,9 @@ public class Category implements Serializable {
 	private Long Id;
 	private String name;
 	
-	@Transient
+	// Mapeamento feito na classe de produto, o nome definido é o nome da coleção na classe produto
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 	
 	public Category() {
