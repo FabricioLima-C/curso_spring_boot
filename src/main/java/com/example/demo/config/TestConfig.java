@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.example.demo.entities.Category;
 import com.example.demo.entities.Order;
 import com.example.demo.entities.OrderItem;
+import com.example.demo.entities.Payment;
 import com.example.demo.entities.Product;
 import com.example.demo.entities.User;
 import com.example.demo.entities.enums.OrderStatus;
@@ -78,7 +79,11 @@ public class TestConfig implements CommandLineRunner{
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
-		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));	
-	
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		// Para salvar um objeto dependente de uma relação Um para Um, não precisa de um repositório, basta chamar novamente o da entidade associada que não depende da outra
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o3);
+		o3.setPayment(pay1);
+		orderRepository.save(o3);
 	}
 }
