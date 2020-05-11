@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.example.demo.entities.pk.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -16,7 +17,7 @@ public class OrderItem implements Serializable {
 	
 	// Classe que utiliza de uma auxiliar para manter o relacionamento entre as tabelas e carregada na class principal para identificar o objeto
 	@EmbeddedId
-	private OrderItemPk id;
+	private OrderItemPk id = new OrderItemPk();
 	
 	private Integer quantity;
 	private Double price;
@@ -31,6 +32,8 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 	
+	//No java enterprise, o JsonIgnore fica no método que chamada outros objetos
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
